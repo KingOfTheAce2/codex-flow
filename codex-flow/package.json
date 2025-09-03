@@ -1,0 +1,21 @@
+{
+  "name": "codex-flow",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.61.0",
+    "@google/generative-ai": "^0.24.1",
+    "hive-sdk": "^1.0.3",
+    "openai": "^5.19.1"
+  },
+  "devDependencies": {
+    "hive-cli": "^0.0.2"
+  }
+}

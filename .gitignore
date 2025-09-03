@@ -1,0 +1,161 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+lib/
+out/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Testing
+coverage/
+*.lcov
+.nyc_output
+test-results/
+playwright-report/
+playwright/.cache/
+
+# IDEs and Editors
+.vscode/
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+
+# API Keys and Secrets - CRITICAL FOR GITHUB
+*.key
+*.pem
+*.crt
+*.p12
+secrets/
+credentials/
+config/local.json
+config/production.json
+
+# Database
+*.sqlite
+*.sqlite3
+*.sqlite-journal
+*.sqlite-wal
+*.db
+*.db-journal
+*.db-wal
+data/
+memory/
+
+# Temporary files
+tmp/
+temp/
+.tmp/
+*.tmp
+*.temp
+
+# Cache
+.cache/
+.npm/
+.pnpm-store/
+.yarn/
+.parcel-cache/
+
+# Package managers - Keep package-lock.json for reproducibility
+yarn.lock
+pnpm-lock.yaml
+
+# Claude Flow specific
+.claude/
+!.claude/settings.json
+.swarm/
+.hive-mind/
+memory/sessions/*
+!memory/sessions/.gitkeep
+memory/agents/*
+!memory/agents/.gitkeep
+coordination/
+orchestration/
+
+# Codex Flow specific
+.codex/
+swarm-state/
+agent-logs/
+task-results/
+tool-cache/
+*.session.json
+
+# Debug
+debug/
+*.debug
+
+# Backup files
+*.bak
+*.backup
+*~
+*.orig
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# Generated documentation
+docs/api/
+docs/generated/
+
+# Performance profiling
+*.cpuprofile
+*.heapsnapshot
+.clinic/
+
+# Local development
+.local/
+local-tools/
+sandbox/
+
+# Security
+.scannerwork/
+.sonarqube/
+security-reports/
+
+# Private notes
+TODO.private.md
+NOTES.private.md
+*.private.*
