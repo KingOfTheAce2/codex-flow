@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+
+import { Command } from 'commander';
+import chalk from 'chalk';
+import { initCommand } from './commands/init';
+import { swarmCommand } from './commands/swarm';
+import { taskCommand } from './commands/task';
+import { configCommand } from './commands/config';
+const packageJson = require('../../package.json');
+const version = packageJson.version;
+
+const program = new Command();
+
+program
+  .name('codex-flow')
+  .description('Multi-agent orchestration toolkit supporting OpenAI, Anthropic Claude, and Google Gemini with swarm intelligence')
+  .version(version);
+
+// Add commands
+program.addCommand(initCommand);
+program.addCommand(swarmCommand);
+program.addCommand(taskCommand);
+program.addCommand(configCommand);
+
+// Global error handler
+program.exitOverride();
+
+try {
+  program.parse();
+} catch (error: any) {
+  if (error.code === 'commander.version') {
+    console.log(version);
+  } else if (error.code === 'commander.help') {
+    console.log(error.message);
+  } else {
+    console.error(chalk.red('Error:'), error.message);
+    process.exit(1);
+  }
+}

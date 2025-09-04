@@ -1,11 +1,22 @@
 {
-  "name": "codex-flow",
-  "version": "0.1.0",
-  "description": "Multi-agent CLI toolkit for OpenAI Codex with swarm orchestration and persistent memory",
+  "name": "@bear_ai/codex-flow",
+  "version": "0.1.0-alpha",
+  "description": "Multi-agent orchestration toolkit supporting OpenAI, Anthropic Claude, and Google Gemini with swarm intelligence",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "codex-flow": "./dist/cli/index.js"
+    "codex-flow": "./dist/cli/bin/codex-flow.js"
+  },
+  "files": [
+    "dist/**/*",
+    ".hive-mind/**/*",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
     "build": "tsc",
@@ -32,7 +43,15 @@
     "mcp",
     "tools"
   ],
-  "author": "",
+  "author": "bear_ai",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bear_ai/codex-flow.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bear_ai/codex-flow/issues"
+  },
+  "homepage": "https://github.com/bear_ai/codex-flow#readme",
   "license": "MIT",
   "dependencies": {
     "@anthropic-ai/sdk": "^0.61.0",
