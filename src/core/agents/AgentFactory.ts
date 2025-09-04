@@ -226,8 +226,8 @@ export class AgentFactory extends EventEmitter {
         break;
       case 'analyst':
       case 'writer':
-        // Use base agent for now, could implement specialized classes later
-        agent = new BaseAgent(agentConfig, this.providerManager) as any;
+        // Use CoderAgent as fallback for now, could implement specialized classes later
+        agent = new CoderAgent(agentConfig, this.providerManager);
         break;
       default:
         throw new Error(`Agent type '${type}' is registered but not implemented`);
@@ -326,7 +326,7 @@ export class AgentFactory extends EventEmitter {
 
     // Create coordinator if specified
     let coordinator: BaseAgent;
-    if (swarmConfig.coordinator !== false) {
+    if (swarmConfig.coordinator !== undefined) {
       coordinator = this.createAgent('coordinator', swarmConfig.coordinator, 'Swarm Coordinator');
     } else {
       // Create a basic coordinator

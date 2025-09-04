@@ -219,7 +219,7 @@ Provide a comprehensive response or solution to complete this task.`;
           results[subtask.id] = await this.handleTaskDirectly(subtask);
         }
       } catch (error) {
-        results[subtask.id] = `Error: ${error.message}`;
+        results[subtask.id] = `Error: ${error instanceof Error ? error.message : String(error)}`;
       }
     }
 

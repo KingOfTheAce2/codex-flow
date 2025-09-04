@@ -54,13 +54,14 @@ swarmCommand
       });
 
       console.log(chalk.green('✅ Swarm spawned successfully!'));
-      console.log(chalk.blue(`Swarm ID: ${swarm.id}`));
-      console.log(chalk.blue(`Active Agents: ${swarm.agents.length}`));
+      console.log(chalk.blue(`Swarm ID: ${swarm.getId()}`));
+      const agents = swarm.getAgents();
+      console.log(chalk.blue(`Active Agents: ${agents.length}`));
       
       if (options.verbose) {
         console.log(chalk.gray('\nAgents:'));
-        swarm.agents.forEach(agent => {
-          console.log(chalk.gray(`  - ${agent.name} (${agent.type}): ${agent.role}`));
+        agents.forEach(agent => {
+          console.log(chalk.gray(`  - ${agent.getName()} (${agent.getType()}): ${agent.getRole()}`));
         });
       }
 
@@ -124,30 +125,32 @@ swarmCommand
         return;
       }
 
-      console.log(chalk.blue(`🐝 Swarm Status: ${swarm.name}\n`));
-      console.log(chalk.white(`ID: ${swarm.id}`));
-      console.log(chalk.white(`Status: ${swarm.status}`));
-      console.log(chalk.white(`Objective: ${swarm.objective}`));
-      console.log(chalk.white(`Topology: ${swarm.topology}`));
-      console.log(chalk.white(`Created: ${new Date(swarm.createdAt).toLocaleString()}`));
+      const status = swarm.getStatus();
       
-      if (swarm.completedAt) {
-        console.log(chalk.white(`Completed: ${new Date(swarm.completedAt).toLocaleString()}`));
+      console.log(chalk.blue(`🐝 Swarm Status: ${status.name}\n`));
+      console.log(chalk.white(`ID: ${status.id}`));
+      console.log(chalk.white(`Status: ${status.status}`));
+      console.log(chalk.white(`Objective: ${status.objective}`));
+      console.log(chalk.white(`Topology: ${status.topology}`));
+      console.log(chalk.white(`Created: ${status.createdAt.toLocaleString()}`));
+      
+      if (status.completedAt) {
+        console.log(chalk.white(`Completed: ${status.completedAt.toLocaleString()}`));
       }
 
       console.log(chalk.blue('\nAgents:'));
-      swarm.agents.forEach(agent => {
+      status.agents.forEach(agent => {
         console.log(chalk.white(`  ${agent.name} (${agent.type})`));
         console.log(chalk.gray(`    Status: ${agent.status}`));
         console.log(chalk.gray(`    Role: ${agent.role}`));
         console.log(chalk.gray(`    Tasks Completed: ${agent.tasksCompleted || 0}`));
       });
 
-      if (swarm.currentTask) {
+      if (status.currentTask) {
         console.log(chalk.blue('\nCurrent Task:'));
-        console.log(chalk.white(`  ${swarm.currentTask.description}`));
-        console.log(chalk.gray(`  Assigned to: ${swarm.currentTask.assignedAgent}`));
-        console.log(chalk.gray(`  Status: ${swarm.currentTask.status}`));
+        console.log(chalk.white(`  ${status.currentTask.description}`));
+        console.log(chalk.gray(`  Assigned to: ${status.currentTask.assignedAgent}`));
+        console.log(chalk.gray(`  Status: ${status.currentTask.status}`));
       }
 
     } catch (error: any) {

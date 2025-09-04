@@ -291,7 +291,7 @@ export class Swarm extends EventEmitter {
   private config: SwarmConfig;
   private agentFactory: AgentFactory;
   private memoryManager: MemoryManager;
-  private coordinator: BaseAgent;
+  private coordinator!: BaseAgent;
   private agents: Map<string, BaseAgent> = new Map();
   private status: SwarmStatus['status'] = 'initializing';
   private taskQueue: Task[] = [];

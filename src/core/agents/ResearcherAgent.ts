@@ -169,7 +169,7 @@ Include:
     return response.content;
   }
 
-  private async researchTechnology(task: Task): Promise<String> {
+  private async researchTechnology(task: Task): Promise<string> {
     const techPrompt = `Research the technology topic:
 
 ${task.description}
