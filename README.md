@@ -70,6 +70,69 @@ codex-flow task "Build a REST API with authentication and testing" --agent-types
 - **npm**: 8.0.0 or higher
 - **OpenAI API Key**: Set as `OPENAI_API_KEY` environment variable
 
+### Required CLI Tools for Multi-LLM Delegation
+
+Codex-Flow can delegate tasks to other AI systems. Install the required CLIs based on your needs:
+
+#### **OpenAI Codex CLI** (Core Requirement)
+Before using codex-flow, ensure the OpenAI Codex CLI is properly configured:
+
+```bash
+# Install OpenAI CLI (if not already installed)
+pip install openai
+
+# Configure authentication
+export OPENAI_API_KEY="your-api-key-here"
+
+# Verify Codex access
+openai api models.list | grep -i codex
+```
+
+**MCP Server Connection**: Codex-flow requires an active MCP (Model Context Protocol) server connection for optimal orchestration. Ensure your MCP server is running and accessible.
+
+#### **Claude Code CLI** (For Claude Delegation)
+To delegate tasks to Claude AI, install Claude Code:
+
+```bash
+# Install Claude Code CLI
+npm install -g @anthropic-ai/claude-cli
+
+# Authenticate via web browser
+claude auth login
+
+# Or configure with API key
+export ANTHROPIC_API_KEY="your-api-key-here"
+claude auth verify
+```
+
+#### **Gemini CLI** (For Gemini Delegation) 
+To delegate tasks to Google Gemini, install the Gemini CLI:
+
+```bash
+# Install Gemini CLI
+npm install -g @google/gemini-cli
+
+# Authenticate via web browser
+gemini auth login
+
+# Or configure with API key
+export GEMINI_API_KEY="your-api-key-here"
+gemini auth verify
+```
+
+#### **Authentication Options**
+All CLI tools support two authentication methods:
+
+1. **Web Browser Authentication** (Recommended)
+   - More secure OAuth flow
+   - Automatic token refresh
+   - Run `[tool] auth login` and follow browser prompts
+
+2. **API Key Authentication** 
+   - Direct API key configuration
+   - Set environment variables: `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`
+   - Verify with `[tool] auth verify`
+
 ### Global Installation
 ```bash
 npm install -g @bear_ai/codex-flow
