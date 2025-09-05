@@ -1,6 +1,6 @@
 {
   "name": "@bear_ai/codex-flow",
-  "version": "0.1.0-alpha",
+  "version": "0.2.2-alpha",
   "description": "Multi-agent orchestration toolkit supporting OpenAI, Anthropic Claude, and Google Gemini with swarm intelligence",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,7 +9,7 @@
   },
   "files": [
     "dist/**/*",
-    ".hive-mind/**/*",
+    "examples/**/*",
     "README.md",
     "LICENSE",
     "package.json"
@@ -61,10 +61,11 @@
     "dotenv": "^16.3.1",
     "hive-sdk": "^1.0.3",
     "inquirer": "^8.2.6",
+    "open": "^8.4.2",
     "openai": "^5.19.1",
     "ora": "^5.4.1",
-    "sqlite3": "^5.1.6",
-    "winston": "^3.11.0",
+    "sqlite3": "^5.1.7",
+    "winston": "^3.15.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
@@ -85,5 +86,10 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "overrides": {
+    "rimraf": "^5.0.5",
+    "glob": "^10.3.10",
+    "inflight": "^1.0.6"
   }
 }

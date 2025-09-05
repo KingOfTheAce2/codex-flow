@@ -89,6 +89,7 @@ async function createProjectStructure(projectDir: string, template: string): Pro
     '.codex-flow/agents',
     '.codex-flow/memory',
     '.codex-flow/logs',
+    'examples',
     'swarms',
     'tools',
     'configs'

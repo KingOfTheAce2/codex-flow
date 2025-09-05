@@ -113,11 +113,21 @@ orchestration/
 
 # Codex Flow specific
 .codex/
+.codex-flow/
+.claude-flow/
 swarm-state/
 agent-logs/
 task-results/
 tool-cache/
 *.session.json
+swarms/
+configs/
+tools/generated/
+
+# Authentication tokens and secrets
+auth/
+.codex-flow/auth/
+tokens.json
 
 # Debug
 debug/

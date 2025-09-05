@@ -6,6 +6,7 @@ import { initCommand } from './commands/init';
 import { swarmCommand } from './commands/swarm';
 import { taskCommand } from './commands/task';
 import { configCommand } from './commands/config';
+import { authCommand } from './commands/auth';
 const packageJson = require('../../package.json');
 const version = packageJson.version;
 
@@ -17,6 +18,7 @@ program
   .version(version);
 
 // Add commands
+program.addCommand(authCommand);
 program.addCommand(initCommand);
 program.addCommand(swarmCommand);
 program.addCommand(taskCommand);

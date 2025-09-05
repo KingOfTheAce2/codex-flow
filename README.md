@@ -4,7 +4,7 @@
 
 Codex-Flow brings the proven workflows of [Gemini-Flow] and [Claude-Flow] to the OpenAI ecosystem, offering a comprehensive toolkit for orchestrating Codex-powered development tasks with advanced swarm intelligence and hive mind coordination.
 
-[![NPM Version](https://img.shields.io/npm/v/codex-flow.svg)](https://npmjs.org/package/codex-flow)
+[![NPM Version](https://img.shields.io/npm/v/@bear_ai/codex-flow.svg)](https://npmjs.org/package/@bear_ai/codex-flow)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue.svg)](https://www.typescriptlang.org/)
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
@@ -13,7 +13,7 @@ Codex-Flow brings the proven workflows of [Gemini-Flow] and [Claude-Flow] to the
 
 ```bash
 # Install Codex-Flow
-npm install -g codex-flow
+npm install -g @bear_ai/codex-flow
 
 # Initialize a new project
 codex-flow init my-project
@@ -72,7 +72,7 @@ codex-flow task "Build a REST API with authentication and testing" --agent-types
 
 ### Global Installation
 ```bash
-npm install -g codex-flow
+npm install -g @bear_ai/codex-flow
 ```
 
 ### Local Development
@@ -483,7 +483,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ## 🔗 Links
 
 - **Documentation**: [docs.codex-flow.dev](https://docs.codex-flow.dev)
-- **NPM Package**: [npmjs.com/package/codex-flow](https://npmjs.com/package/codex-flow)
+- **NPM Package**: [npmjs.com/package/@bear_ai/codex-flow](https://npmjs.com/package/@bear_ai/codex-flow)
 - **Issues**: [GitHub Issues](https://github.com/your-org/codex-flow/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/your-org/codex-flow/discussions)
 

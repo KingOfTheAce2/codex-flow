@@ -1,4 +1,5 @@
 // Core exports
+export * from './core/auth';
 export * from './core/config';
 export { BaseProvider, ProviderMessage, ProviderResponse, ChatCompletionRequest, ProviderManager } from './core/providers';
 export * from './core/agents';

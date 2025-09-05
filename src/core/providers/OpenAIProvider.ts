@@ -1,18 +1,40 @@
 import OpenAI from 'openai';
 import { BaseProvider, ProviderResponse, ChatCompletionRequest, ProviderConfig } from './BaseProvider';
+import { AuthManager } from '../auth/AuthManager';
 
 export class OpenAIProvider extends BaseProvider {
-  private client: OpenAI;
+  private client!: OpenAI;
 
   constructor(config: ProviderConfig) {
     super('openai', config);
+    this.initializeClient(config).catch(err => {
+      this.emit('error', err);
+    });
+  }
+
+  private async initializeClient(config: ProviderConfig): Promise<void> {
+    let apiKey = config.apiKey;
     
-    if (!config.apiKey) {
-      throw new Error('OpenAI API key is required');
+    // If no API key provided, try to get from auth manager
+    if (!apiKey) {
+      const authManager = new AuthManager();
+      const token = await authManager.getToken('openai');
+      if (token) {
+        if (token.tokenType === 'Session') {
+          // For session tokens, we'll need to use a different approach
+          // For now, inform user they need to use API key for OpenAI SDK
+          throw new Error('Session token found but OpenAI SDK requires API key. Please use API key authentication or implement session token handling.');
+        }
+        apiKey = token.accessToken;
+      }
+    }
+
+    if (!apiKey) {
+      throw new Error('OpenAI API key is required. Please run "codex-flow auth login -p openai" to authenticate.');
     }
 
     this.client = new OpenAI({
-      apiKey: config.apiKey,
+      apiKey: apiKey,
       timeout: config.timeout || 30000
     });
   }
