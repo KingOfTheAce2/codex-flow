@@ -32,7 +32,10 @@
     "prebuild": "npm run clean",
     "prepublishOnly": "npm run build",
     "setup:mcp": "npm install -g ruv-swarm-mcp || echo \"Installing ruv-swarm-mcp globally...\"",
-    "postinstall": "npm run setup:mcp || true && npm run setup:mcp"
+    "postinstall": "npm run setup:mcp || true && npm run setup:mcp && npm run setup:mcp",
+    "codex:bootstrap": "powershell -ExecutionPolicy Bypass -File scripts/codex/bootstrap.ps1",
+    "codex:verify": "codex-flow config verify && echo \"Configuration: OK\"",
+    "codex:swarm": "codex-flow swarm spawn \"Build a simple hello world application\" --providers auto --verbose"
   },
   "keywords": [
     "openai",
