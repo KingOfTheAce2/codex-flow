@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import inquirer from 'inquirer';
 import { SwarmManager } from '../../core/swarm/SwarmManager';
 import { ConfigManager } from '../../core/config';
+import { ProviderManager } from '../../core/providers/ProviderManager';
 
 export const swarmCommand = new Command('swarm')
   .description('Manage agent swarms');
@@ -23,6 +24,14 @@ swarmCommand
       const configManager = new ConfigManager();
       await configManager.load();
 
+      // Create ProviderManager instance from config
+      const config = configManager.getConfig();
+      const providerManager = new ProviderManager({
+        providers: config.providers,
+        defaultProvider: 'openai',
+        loadBalancing: { enabled: true, strategy: 'round-robin' }
+      });
+
       let swarmObjective = objective;
       
       if (!swarmObjective) {
@@ -41,7 +50,8 @@ swarmCommand
       console.log(chalk.white(`Topology: ${options.topology}`));
       console.log(chalk.white(`Max Agents: ${options.maxAgents}\n`));
 
-      const swarmManager = new SwarmManager(configManager.getConfig());
+      // Pass providerManager instead of raw config
+      const swarmManager = new SwarmManager({ ...config, providerManager });
       
       const swarm = await swarmManager.spawn({
         objective: swarmObjective,

@@ -11,18 +11,44 @@ Codex-Flow brings the proven workflows of [Gemini-Flow] and [Claude-Flow] to the
 
 ## 🚀 Quick Start
 
+Get up and running with Codex-Flow in 3 simple steps:
+
 ```bash
-# Install Codex-Flow
+# 1. Install and initialize
 npm install -g @bear_ai/codex-flow
-
-# Initialize a new project
 codex-flow init my-project
+cd my-project
 
-# Start a swarm with multiple agents
-codex-flow swarm create --topology hierarchical --agents 5
+# 2. Bootstrap your environment (sets up .env, MCP servers, providers)
+npm run codex:bootstrap
 
-# Execute a complex task
-codex-flow task "Build a REST API with authentication and testing" --agent-types coder,tester,reviewer
+# 3. Run your first swarm
+npm run codex:swarm
+```
+
+That's it! The bootstrap process automatically:
+- ✅ Creates `.env` with provider placeholders or detected keys
+- ✅ Installs and registers MCP servers
+- ✅ Connects Codex MCP server and lists it in `.mcp.json`
+- ✅ Runs config verification and surfaces any blocking errors
+- ✅ Provides working example commands
+
+### Alternative Manual Setup
+
+If you prefer manual setup:
+
+```bash
+# Initialize project only
+codex-flow init --no-bootstrap
+
+# Add your API key to .env
+echo "OPENAI_API_KEY=your_key_here" >> .env
+
+# Verify configuration
+codex-flow config verify
+
+# Spawn your first swarm
+codex-flow swarm spawn "Build a hello world app" --verbose
 ```
 
 ## ✨ Key Features

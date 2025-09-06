@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "ruv-swarm": {
+      "command": "ruv-swarm-mcp",
+      "args": [
+        "--stdio"
+      ],
+      "env": {
+        "RUST_LOG": "info"
+      }
+    }
+  }
+}

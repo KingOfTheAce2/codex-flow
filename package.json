@@ -30,7 +30,9 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "setup:mcp": "npm install -g ruv-swarm-mcp || echo \"Installing ruv-swarm-mcp globally...\"",
+    "postinstall": "npm run setup:mcp || true && npm run setup:mcp"
   },
   "keywords": [
     "openai",
@@ -56,6 +58,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.61.0",
     "@google/generative-ai": "^0.24.1",
+    "better-sqlite3": "^12.2.0",
     "chalk": "^4.1.2",
     "commander": "^11.1.0",
     "dotenv": "^16.3.1",
@@ -64,11 +67,11 @@
     "open": "^8.4.2",
     "openai": "^5.19.1",
     "ora": "^5.4.1",
-    "sqlite3": "^5.1.7",
     "winston": "^3.15.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
     "@types/inquirer": "^8.2.10",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.10.6",

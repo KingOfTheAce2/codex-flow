@@ -7,6 +7,7 @@ import { swarmCommand } from './commands/swarm';
 import { taskCommand } from './commands/task';
 import { configCommand } from './commands/config';
 import { authCommand } from './commands/auth';
+import { hiveLoopCommand } from './commands/hive-loop';
 const packageJson = require('../../package.json');
 const version = packageJson.version;
 
@@ -23,6 +24,7 @@ program.addCommand(initCommand);
 program.addCommand(swarmCommand);
 program.addCommand(taskCommand);
 program.addCommand(configCommand);
+program.addCommand(hiveLoopCommand);
 
 // Global error handler
 program.exitOverride();

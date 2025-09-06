@@ -1,0 +1,15 @@
+{
+  "name": "test-project",
+  "version": "1.0.0",
+  "description": "Codex-Flow project with MCP integration",
+  "scripts": {
+    "setup:mcp": "npm install -g ruv-swarm-mcp || echo \"Installing ruv-swarm-mcp globally...\"",
+    "postinstall": "npm run setup:mcp && npm run setup:mcp",
+    "codex:bootstrap": "pwsh -ExecutionPolicy Bypass -File scripts/codex/bootstrap.ps1",
+    "codex:verify": "codex-flow config verify && echo \"Configuration: OK\"",
+    "codex:swarm": "codex-flow swarm spawn \"Build a simple hello world application\" --providers auto --verbose"
+  },
+  "dependencies": {
+    "@bear_ai/codex-flow": "^0.2.2-alpha"
+  }
+}

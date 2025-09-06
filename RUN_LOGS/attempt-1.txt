@@ -1,0 +1,8 @@
+🐝 Spawning new swarm...
+
+Objective: Build a hello world app
+Configuration: default
+Topology: hierarchical
+Max Agents: 5
+
+❌ Failed to spawn swarm: this.providerManager.getEnabledProviders is not a function

@@ -2,6 +2,7 @@ import { EventEmitter } from 'events';
 import { BaseAgent, Task } from '../agents/BaseAgent';
 import { AgentFactory } from '../agents/AgentFactory';
 import { MemoryManager } from '../memory/MemoryManager';
+import { ProviderManager } from '../providers/ProviderManager';
 
 export interface SwarmConfig {
   id: string;
@@ -60,7 +61,12 @@ export class SwarmManager extends EventEmitter {
   constructor(config: any) {
     super();
     this.config = config;
-    this.agentFactory = new AgentFactory(config.providerManager || config.providers);
+    
+    // Ensure providerManager is a ProviderManager instance
+    const providerManager = config.providerManager instanceof ProviderManager 
+      ? config.providerManager 
+      : new ProviderManager({ providers: config.providers || {}, defaultProvider: 'openai' });
+    this.agentFactory = new AgentFactory(providerManager);
     this.memoryManager = new MemoryManager(config.memory || {});
 
     // Set up event handlers

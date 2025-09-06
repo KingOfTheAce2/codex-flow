@@ -1,0 +1,25 @@
+🐝 Spawning new swarm...
+
+Objective: hello
+Configuration: default
+Topology: hierarchical
+Max Agents: 5
+
+Provider 'openai' not available, using fallback: 'local'
+Provider 'openai' not available, using fallback: 'local'
+Provider 'openai' not available, using fallback: 'local'
+Provider 'openai' not available, using fallback: 'local'
+Provider 'anthropic' not available, using fallback: 'local'
+✅ Swarm spawned successfully!
+Swarm ID: swarm-1757137590670-dre7vennw
+Active Agents: 5
+
+Agents:
+  - Swarm for: hello... Coordinator (coordinator): Task coordination and agent management
+  - Coder 2 (coder): Software development and code generation
+  - Coder 3 (coder): Software development and code generation
+  - Tester 4 (tester): Quality assurance and testing
+  - Researcher 5 (researcher): Information gathering and analysis
+
+🚀 Starting swarm execution...
+❌ Failed to spawn swarm: Local LLM API error: No compatible API format found

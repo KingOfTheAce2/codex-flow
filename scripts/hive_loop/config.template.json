@@ -1,0 +1,12 @@
+{
+  "prompt1": "Build a modern web application using React and TypeScript. Include proper error handling, responsive design, and accessibility features.",
+  "prompt2": "You are wrong, please fix the issues and align with the latest React best practices. Ensure the code follows SOLID principles, uses proper TypeScript types, and includes comprehensive error boundaries.",
+  "maxSessions": 5,
+  "durationHours": 2,
+  "sessionTimeoutMinutes": 20,
+  "workDir": "./workspace",
+  "providers": ["local", "claude"],
+  "logDir": "./logs/automation",
+  "stopOnError": false,
+  "verbose": true
+}
