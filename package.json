@@ -1,6 +1,6 @@
 {
   "name": "@bear_ai/codex-flow",
-  "version": "0.2.2-alpha",
+  "version": "0.2.3-alpha",
   "description": "Multi-agent orchestration toolkit supporting OpenAI, Anthropic Claude, and Google Gemini with swarm intelligence",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
