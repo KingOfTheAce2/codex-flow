@@ -83,7 +83,7 @@ codex-flow swarm spawn "Create a hello world app"
 
 With this integration, users can:
 
-1. **Direct CLI Usage**: Work with OpenAI CLI, Claude Code, and Gemini CLI without pip installations
+1. **Direct CLI Usage**: Work with OpenAI CLI, Claude Code, and Gemini CLI through browser authentication
 2. **Seamless Tool Access**: ruv-swarm tools are available directly in Claude Code sessions
 3. **Automated Setup**: No manual MCP server configuration needed
 4. **Cross-Platform**: Works on Windows, macOS, and Linux

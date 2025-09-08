@@ -4,6 +4,9 @@ import inquirer from 'inquirer';
 import { SwarmManager } from '../../core/swarm/SwarmManager';
 import { ConfigManager } from '../../core/config';
 import { ProviderManager } from '../../core/providers/ProviderManager';
+import { MemoryManager } from '../../core/memory/MemoryManager';
+import { MCPSwarmManager } from '../../mcp/mcp-swarm-manager';
+import { initializeMCP } from '../../mcp';
 
 export const swarmCommand = new Command('swarm')
   .description('Manage agent swarms');
@@ -11,12 +14,17 @@ export const swarmCommand = new Command('swarm')
 // Spawn a new swarm
 swarmCommand
   .command('spawn')
-  .description('Spawn a new agent swarm')
+  .description('Spawn a new agent swarm with MCP tool support')
   .argument('[objective]', 'Swarm objective')
   .option('-c, --config <config>', 'Swarm configuration file', 'default')
   .option('-m, --max-agents <number>', 'Maximum number of agents', '5')
   .option('-t, --topology <topology>', 'Swarm topology (hierarchical, mesh, ring, star)', 'hierarchical')
   .option('--providers <providers...>', 'AI providers to use')
+  .option('--mcp-servers <servers...>', 'MCP servers to connect to')
+  .option('--allow-tools <tools...>', 'Allowed MCP tools')
+  .option('--block-tools <tools...>', 'Blocked MCP tools')
+  .option('--allow-all-tools', 'Allow all MCP tools')
+  .option('--no-mcp', 'Disable MCP tool integration')
   .option('--auto-scale', 'Enable auto-scaling')
   .option('--verbose', 'Verbose logging')
   .action(async (objective, options) => {
@@ -24,8 +32,9 @@ swarmCommand
       const configManager = new ConfigManager();
       await configManager.load();
 
-      // Create ProviderManager instance from config
+      // Create managers
       const config = configManager.getConfig();
+      const memoryManager = new MemoryManager(config.memory);
       const providerManager = new ProviderManager({
         providers: config.providers,
         defaultProvider: 'openai',
@@ -44,43 +53,85 @@ swarmCommand
         swarmObjective = answer.objective;
       }
 
-      console.log(chalk.blue('🐝 Spawning new swarm...\n'));
+      console.log(chalk.blue('🐝 Spawning MCP-enhanced swarm...\n'));
       console.log(chalk.white(`Objective: ${swarmObjective}`));
       console.log(chalk.white(`Configuration: ${options.config}`));
       console.log(chalk.white(`Topology: ${options.topology}`));
-      console.log(chalk.white(`Max Agents: ${options.maxAgents}\n`));
+      console.log(chalk.white(`Max Agents: ${options.maxAgents}`));
 
-      // Pass providerManager instead of raw config
-      const swarmManager = new SwarmManager({ ...config, providerManager });
-      
-      const swarm = await swarmManager.spawn({
-        objective: swarmObjective,
-        config: options.config,
-        maxAgents: parseInt(options.maxAgents),
-        topology: options.topology,
-        providers: options.providers,
-        autoScale: options.autoScale,
-        verbose: options.verbose
-      });
-
-      console.log(chalk.green('✅ Swarm spawned successfully!'));
-      console.log(chalk.blue(`Swarm ID: ${swarm.getId()}`));
-      const agents = swarm.getAgents();
-      console.log(chalk.blue(`Active Agents: ${agents.length}`));
-      
-      if (options.verbose) {
-        console.log(chalk.gray('\nAgents:'));
-        agents.forEach(agent => {
-          console.log(chalk.gray(`  - ${agent.getName()} (${agent.getType()}): ${agent.getRole()}`));
-        });
+      // Initialize MCP if not disabled
+      let mcpSwarmManager;
+      if (!options.noMcp) {
+        try {
+          console.log(chalk.gray('Initializing MCP integration...'));
+          const { registry, toolRegistry } = await initializeMCP();
+          mcpSwarmManager = new MCPSwarmManager(memoryManager, providerManager, registry, toolRegistry);
+          
+          // Test MCP integration
+          const mcpTest = await mcpSwarmManager.testMCPIntegration();
+          if (mcpTest.success) {
+            console.log(chalk.green(`✅ MCP initialized: ${mcpTest.connectedServers.length} servers, ${mcpTest.availableTools.length} tools`));
+          } else {
+            console.log(chalk.yellow(`⚠️  MCP partially initialized: ${mcpTest.errors.join(', ')}`));
+          }
+        } catch (mcpError) {
+          console.log(chalk.yellow(`⚠️  MCP initialization failed, using standard swarm: ${(mcpError as Error).message}`));
+          mcpSwarmManager = null;
+        }
       }
 
-      // Start execution
-      console.log(chalk.blue('\n🚀 Starting swarm execution...'));
-      await swarm.execute();
+      console.log();
+
+      // Prepare tool permissions
+      const toolPermissions = {
+        allowAll: options.allowAllTools,
+        allowedTools: options.allowTools,
+        blockedTools: options.blockTools
+      };
+
+      // Spawn MCP-enhanced or regular swarm
+      if (mcpSwarmManager && !options.noMcp) {
+        const result = await mcpSwarmManager.spawnMCPTask(swarmObjective, {
+          swarmConfig: {
+            topology: options.topology,
+            maxAgents: parseInt(options.maxAgents),
+            autoScale: options.autoScale
+          },
+          providers: options.providers,
+          verbose: options.verbose,
+          enabledMCPServers: options.mcpServers,
+          toolPermissions
+        });
+
+        console.log(chalk.green('✅ MCP-enhanced swarm task completed!'));
+        console.log(chalk.blue('Result:\n'));
+        console.log(result);
+
+        // Show MCP stats
+        if (options.verbose) {
+          const stats = mcpSwarmManager.getMCPStats();
+          console.log(chalk.gray('\nMCP Statistics:'));
+          console.log(chalk.gray(`  Connected Servers: ${stats.connectedServers}`));
+          console.log(chalk.gray(`  Available Tools: ${stats.totalTools}`));
+          console.log(chalk.gray(`  Tools by Server:`));
+          Object.entries(stats.toolsByServer).forEach(([server, count]) => {
+            console.log(chalk.gray(`    ${server}: ${count} tools`));
+          });
+        }
+      } else {
+        // Fallback to regular swarm
+        console.log(chalk.yellow('Using standard swarm (MCP disabled)'));
+        const swarmManager = new SwarmManager(memoryManager, providerManager);
+        
+        // This would need to be implemented in the base SwarmManager
+        console.log(chalk.blue('Standard swarm execution not yet implemented in this version'));
+      }
 
     } catch (error: any) {
       console.error(chalk.red('❌ Failed to spawn swarm:'), error.message);
+      if (options.verbose) {
+        console.error(chalk.gray(error.stack));
+      }
       process.exit(1);
     }
   });

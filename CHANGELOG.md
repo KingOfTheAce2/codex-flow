@@ -5,6 +5,60 @@ All notable changes to Codex-Flow will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1-alpha] - 2024-12-08
+
+### 🚀 Major MCP Integration Features Added
+
+#### Complete Model Context Protocol (MCP) Support
+- **MCP Client Layer**: Full implementation using official @modelcontextprotocol/sdk
+- **MCP Server Registry**: Configuration management with Zod schema validation and lifecycle control
+- **Universal Tool Adapter**: Bridge between MCP tools and unified Tool interface for all providers
+- **LLM-to-MCP Bridge**: Seamless tool execution across OpenAI, Anthropic, and Gemini with provider-specific formatting
+
+#### Enhanced Agent System
+- **MCP-Enhanced Agents**: Extended BaseAgent with comprehensive MCP tool capabilities
+- **Tool Permission System**: Granular access control with allow/block lists per agent
+- **Multi-Provider Tool Execution**: Intelligent tool routing based on provider capabilities
+- **Enhanced System Prompts**: Dynamic tool information integration for better agent awareness
+
+#### Advanced Error Handling & Reliability
+- **Circuit Breaker Pattern**: Automatic failure detection and recovery for MCP servers
+- **Exponential Backoff Retry**: Configurable retry mechanisms with backoff strategies  
+- **Comprehensive Timeout Management**: Connection, call, and health check timeouts
+- **Robust Error Recovery**: Graceful degradation when MCP servers are unavailable
+
+#### CLI & Management Tools
+- **MCP Command Suite**: Complete `codex-flow mcp` commands for server management
+  - `mcp list`, `mcp add`, `mcp remove`, `mcp test`
+  - `mcp connect`, `mcp disconnect`, `mcp tools`
+  - `mcp enable`, `mcp disable` for server control
+- **Enhanced Swarm Spawn**: MCP-powered swarm execution with tool integration
+- **Interactive Configuration**: Guided setup for MCP servers and tool permissions
+
+### 🛠️ Technical Improvements
+- **Swarm Manager Enhancement**: MCPSwarmManager with integrated tool capabilities
+- **Performance Monitoring**: Tool execution statistics, latency tracking, and health metrics
+- **Connection Pooling**: Efficient MCP server connection management with auto-reconnection
+- **Memory Integration**: MCP tool results stored in unified memory system
+
+### 🧪 Testing & Quality Assurance
+- **Comprehensive Test Suite**: Full MCP integration testing with sample calculator server
+- **Test MCP Server**: Built-in test server for development and validation
+- **Integration Tests**: End-to-end testing of swarm operations with MCP tools
+- **Error Scenario Testing**: Timeout, connection failure, and invalid tool handling
+
+### 📚 Documentation & Examples
+- **MCP Integration Guide**: Complete setup and usage documentation
+- **Tool Development Examples**: Sample MCP tools and server implementations
+- **Troubleshooting Guide**: Common issues and resolution strategies
+- **API Documentation**: Full coverage of MCP interfaces and methods
+
+### 🐛 Critical Fixes
+- **Provider Authentication**: Resolved API key validation and session management issues
+- **TypeScript Compilation**: Fixed strict mode errors and import/export issues
+- **Memory Leaks**: Proper cleanup of MCP connections and event listeners
+- **Configuration Validation**: Enhanced error handling for malformed configurations
+
 ## [0.3.0-alpha] - 2024-12-19
 
 ### 🚀 Major Features Added

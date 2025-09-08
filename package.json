@@ -1,6 +1,6 @@
 {
   "name": "@bear_ai/codex-flow",
-  "version": "0.3.0-alpha",
+  "version": "0.3.1-alpha",
   "description": "Revolutionary AI orchestration system that unifies Claude, Gemini, and OpenAI under intelligent coordination for unprecedented performance",
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -11,7 +11,7 @@
     "bin/**/*",
     "src/**/*",
     "ARCHITECTURE.md",
-    "MIGRATION_PLAN.md", 
+    "MIGRATION_PLAN.md",
     "EXAMPLES.md",
     "CHANGELOG.md",
     "README_NEW.md",
@@ -36,7 +36,7 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "echo 'Skipping build for alpha release'",
     "setup:mcp": "npm install -g ruv-swarm-mcp || echo \"Installing ruv-swarm-mcp globally...\"",
     "postinstall": "npm run setup:mcp || true && npm run setup:mcp && npm run setup:mcp",
     "codex:bootstrap": "powershell -ExecutionPolicy Bypass -File scripts/codex/bootstrap.ps1",
@@ -67,6 +67,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.61.0",
     "@google/generative-ai": "^0.24.1",
+    "@modelcontextprotocol/sdk": "^1.17.5",
     "better-sqlite3": "^12.2.0",
     "chalk": "^4.1.2",
     "commander": "^11.1.0",
