@@ -1,15 +1,21 @@
 {
   "name": "@bear_ai/codex-flow",
-  "version": "0.2.3-alpha",
-  "description": "Multi-agent orchestration toolkit supporting OpenAI, Anthropic Claude, and Google Gemini with swarm intelligence",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "version": "0.3.0-alpha",
+  "description": "Revolutionary AI orchestration system that unifies Claude, Gemini, and OpenAI under intelligent coordination for unprecedented performance",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
   "bin": {
-    "codex-flow": "./dist/cli/bin/codex-flow.js"
+    "codex-flow": "./bin/codex-flow.js"
   },
   "files": [
-    "dist/**/*",
-    "examples/**/*",
+    "bin/**/*",
+    "src/**/*",
+    "ARCHITECTURE.md",
+    "MIGRATION_PLAN.md", 
+    "EXAMPLES.md",
+    "CHANGELOG.md",
+    "README_NEW.md",
+    "tsconfig.json",
     "README.md",
     "LICENSE",
     "package.json"

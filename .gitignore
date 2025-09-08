@@ -169,3 +169,7 @@ security-reports/
 TODO.private.md
 NOTES.private.md
 *.private.*
+
+# Ignore local flow clones
+claude-flow-main/
+gemini-flow-main/
