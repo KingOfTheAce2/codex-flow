@@ -6,7 +6,7 @@
  * while preserving Byzantine fault tolerance and real-time optimization.
  */
 
-import { BaseAdapter, TaskRequest, TaskResponse, AgentCapability, ProviderHealth, MemoryContext, AdapterFactory } from '../universal/base-adapter.js';
+import { BaseAdapter, TaskRequest, TaskResponse, AgentCapability, ProviderHealth, MemoryContext, AdapterFactory } from '../universal/base-adapter';
 import { EventEmitter } from 'events';
 
 export interface GeminiConfig {
@@ -137,7 +137,7 @@ export class GeminiA2ABridge extends BaseAdapter {
     } catch (error) {
       this.updateHealth({
         status: 'unavailable',
-        issues: [`Initialization failed: ${error.message}`]
+        issues: [`Initialization failed: ${(error as Error).message}`]
       });
       return false;
     }
@@ -219,7 +219,7 @@ export class GeminiA2ABridge extends BaseAdapter {
     }
 
     // Check resource requirements
-    if (requirements?.agents && requirements.agents > this.config.a2aProtocol?.maxAgents) {
+    if (requirements?.agents && this.config.a2aProtocol?.maxAgents && requirements.agents > this.config.a2aProtocol.maxAgents) {
       return false;
     }
 
@@ -375,7 +375,7 @@ export class GeminiA2ABridge extends BaseAdapter {
         successRate: 0,
         errorRate: 100,
         lastCheck: new Date(),
-        issues: [`Health check error: ${error.message}`]
+        issues: [`Health check error: ${(error as Error).message}`]
       };
 
       this.updateHealth(health);

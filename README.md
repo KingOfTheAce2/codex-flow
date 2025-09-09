@@ -1,13 +1,123 @@
-# 🎯 Codex-Flow: Revolutionary Multi-AI Orchestration
+>_ You are using OpenAI Codex in D:\GitHub\Codex-flow-test
 
-[![npm version](https://badge.fury.io/js/%40bear_ai%2Fcodex-flow.svg)](https://www.npmjs.com/package/@bear_ai/codex-flow)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
+## 🔑 Authentication Requirements
 
-> **The first truly intelligent multi-AI orchestration system that unifies Claude, Gemini, and OpenAI under strategic coordination for unprecedented performance.**
+### 🚨 OpenAI API Key - HARD REQUIREMENT
 
-Codex-Flow revolutionizes AI task execution by using **OpenAI as the "Queen Bee"** to analyze tasks and strategically delegate work to the optimal AI providers, creating synergistic results that far exceed single-provider capabilities.
+**CRITICAL**: OpenAI API key is **mandatory** for core orchestration functionality. Unlike Claude and Gemini, OpenAI does not support web-based authentication.
+
+#### Setup OpenAI API Key:
+
+1. **Get an OpenAI API Key**:
+   - Visit [OpenAI Platform](https://platform.openai.com/api-keys)
+   - Create a new API key
+   - Copy the key (starts with `sk-`)
+
+2. **Configure the API Key**:
+   ```bash
+   # Option 1: Environment variable (recommended)
+   export OPENAI_API_KEY=sk-your-api-key-here
+   
+   # Option 2: Create .env file in project root
+   echo "OPENAI_API_KEY=sk-your-api-key-here" > .env
+   
+   # Option 3: PowerShell (Windows)
+   $env:OPENAI_API_KEY="sk-your-api-key-here"
+   ```
+
+3. **Verify Configuration**:
+   ```bash
+   npx codex-flow config verify
+   ```
+
+### ✅ Claude & Gemini - Web Login Available
+
+**OPTIONAL**: Claude and Gemini support both API keys and web-based authentication:
+
+#### Option A: Web Login (No API Key Required)
+```bash
+# Claude web authentication
+npx claude-flow auth login --provider claude
+
+# Gemini web authentication  
+npx gemini-flow auth login --provider gemini
+```
+
+#### Option B: API Keys (Optional)
+```bash
+# Optional: Set API keys for enhanced features
+export ANTHROPIC_API_KEY=your-claude-key-here
+export GOOGLE_AI_API_KEY=your-gemini-key-here
+```
+
+**Key Difference**: OpenAI requires a paid API key, while Claude and Gemini can work with free web authentication.
+
+### Usage Limits & Cost Control
+
+This project includes built-in usage metering with the following hardcoded limits:
+- **Model**: `gpt-4o-mini` (cost-optimized)
+- **Max Steps**: 50 per task
+- **Concurrency**: 3 parallel requests max
+- **Prompt Budget**: 4,000 tokens max per request
+- **Response Limit**: 2,000 tokens max per response
+- **Daily Limit**: $5 USD spending cap
+
+**Usage Monitoring Commands:**
+```bash
+# View detailed usage report
+npm run meter:usage
+
+# Check if within limits (exit code 0=OK, 1=violations)
+npm run meter:check
+
+# Reset all usage counters (use with caution)
+npm run meter:reset
+
+# View current hardcoded limits
+npm run meter:limits
+
+# Test the metered OpenAI integration
+npm run example:metered
+```
+
+### Example Usage Report
+```
+🔍 CODEX-FLOW USAGE METER REPORT
+==================================================
+📅 Date: 2025-09-09
+🤖 Model: gpt-4o-mini
+
+📊 DAILY USAGE:
+  Requests: 15/1000 (985 remaining)
+  Tokens: 12,450/500,000 (487,550 remaining)  
+  Cost: $0.0234/$5.00 ($4.9766 remaining)
+  Tasks: 3
+
+⚙️  CURRENT LIMITS:
+  Max Steps per Task: 50
+  Max Concurrent Requests: 3 (1 active)
+  Max Prompt Tokens: 4,000
+  Max Response Tokens: 2,000
+
+🚦 STATUS: ✅ All limits OK
+```
+
+### Customizing Limits (Optional)
+To modify the hardcoded limits, edit `src/config/usage-limits.ts` or use environment variables:
+
+```bash
+# Custom model and limits (use with caution)
+export CODEX_FLOW_MODEL="gpt-4o-mini"
+export CODEX_FLOW_DAILY_CAP="10.00"
+export CODEX_FLOW_MAX_STEPS="25" 
+export CODEX_FLOW_MAX_CONCURRENT="2"
+```
+
+## Commands
+
+ /init - create an AGENTS.md file with instructions for Codex
+ /status - show current session configuration and token usage
+ /approvals - choose what Codex can do without approval
 
 ## 🚀 Why Codex-Flow?
 

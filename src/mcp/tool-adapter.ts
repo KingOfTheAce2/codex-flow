@@ -4,9 +4,9 @@
  * Bridges MCP tools with the unified Tool interface used by swarm agents
  */
 
-import { MCPClient, MCPTool, MCPToolResult } from './client.js';
-import { MCPRegistry } from './registry.js';
-import { BaseTool } from '../tools/BaseTool.js';
+import { MCPClient, MCPTool, MCPToolResult } from './client';
+import { MCPRegistry } from './registry';
+import { BaseTool } from '../tools/BaseTool';
 import winston from 'winston';
 
 export interface ToolCall {
@@ -41,7 +41,18 @@ export class MCPToolAdapter extends BaseTool {
     mcpTool: MCPTool,
     registry: MCPRegistry
   ) {
-    super(mcpTool.name, mcpTool.description || `MCP tool from ${serverId}`);
+    super({
+      name: mcpTool.name,
+      description: mcpTool.description || `MCP tool from ${serverId}`,
+      category: 'mcp',
+      version: '1.0.0',
+      parameters: Object.entries(mcpTool.inputSchema?.properties || {}).map(([name, prop]: [string, any]) => ({
+        name,
+        type: prop.type || 'string',
+        description: prop.description || `Parameter ${name}`,
+        required: mcpTool.inputSchema?.required?.includes(name) || false
+      }))
+    });
     
     this.name = mcpTool.name;
     this.description = mcpTool.description || `MCP tool from ${serverId}`;

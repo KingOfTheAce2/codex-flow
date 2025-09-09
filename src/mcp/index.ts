@@ -7,11 +7,11 @@
  * - Enhanced agents with MCP support
  */
 
-export { MCPClient, MCPClientManager } from './client.js';
-export { MCPRegistry } from './registry.js';
-export { MCPToolAdapter, MCPToolRegistry } from './tool-adapter.js';
-export { LLMToolBridge, ProviderToolHandler } from './llm-bridge.js';
-export { MCPEnhancedAgent } from './mcp-enhanced-agent.js';
+export { MCPClient, MCPClientManager } from './client';
+export { MCPRegistry } from './registry';
+export { MCPToolAdapter, MCPToolRegistry } from './tool-adapter';
+export { LLMToolBridge, ProviderToolHandler } from './llm-bridge';
+export { MCPEnhancedAgent } from './mcp-enhanced-agent';
 
 export type {
   MCPServerConfig,
@@ -20,18 +20,18 @@ export type {
   MCPPrompt,
   MCPToolCall,
   MCPToolResult
-} from './client.js';
+} from './client';
 
 export type {
   MCPRegistryConfig,
   ExtendedMCPServerConfig,
   MCPServerStatus
-} from './registry.js';
+} from './registry';
 
 export type {
   ToolCall,
   ToolResult
-} from './tool-adapter.js';
+} from './tool-adapter';
 
 export type {
   OpenAIToolCall,
@@ -40,19 +40,19 @@ export type {
   AnthropicToolResult,
   GeminiFunctionCall,
   GeminiFunctionResponse
-} from './llm-bridge.js';
+} from './llm-bridge';
 
 export type {
   MCPAgentConfig,
   MCPAgentContext
-} from './mcp-enhanced-agent.js';
+} from './mcp-enhanced-agent';
 
 /**
  * Initialize MCP system with default configuration
  */
 export async function initializeMCP(configPath?: string) {
-  const { MCPRegistry } = await import('./registry.js');
-  const { MCPToolRegistry } = await import('./tool-adapter.js');
+  const { MCPRegistry } = await import('./registry');
+  const { MCPToolRegistry } = await import('./tool-adapter');
   
   const registry = new MCPRegistry(configPath);
   await registry.loadConfig();

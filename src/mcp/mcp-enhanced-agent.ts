@@ -4,11 +4,11 @@
  * Extends BaseAgent with MCP tool integration capabilities
  */
 
-import { BaseAgent, AgentConfig, Task, AgentContext } from '../core/agents/BaseAgent.js';
-import { ProviderManager } from '../core/providers/ProviderManager.js';
-import { LLMToolBridge, ProviderToolHandler } from './llm-bridge.js';
-import { MCPToolRegistry } from './tool-adapter.js';
-import { MCPRegistry } from './registry.js';
+import { BaseAgent, AgentConfig, Task, AgentContext } from '../core/agents/BaseAgent';
+import { ProviderManager } from '../core/providers/ProviderManager';
+import { LLMToolBridge, ProviderToolHandler } from './llm-bridge';
+import { MCPToolRegistry } from './tool-adapter';
+import { MCPRegistry } from './registry';
 import winston from 'winston';
 
 export interface MCPAgentConfig extends AgentConfig {
@@ -85,7 +85,7 @@ export abstract class MCPEnhancedAgent extends BaseAgent {
   /**
    * Enhanced task execution with MCP tool support
    */
-  async executeTask(task: Task): Promise<string> {
+  override async executeTask(task: Task): Promise<string> {
     try {
       this.logger.info('Starting task execution with MCP tools', { 
         taskId: task.id,
@@ -112,10 +112,15 @@ export abstract class MCPEnhancedAgent extends BaseAgent {
    */
   async generateResponseWithTools(prompt: string, context?: any): Promise<string> {
     const provider = await this.providerManager.getProvider(this.config.provider);
-    const providerType = provider.getProviderType();
+    
+    if (!provider) {
+      throw new Error(`Provider not found: ${this.config.provider}`);
+    }
+
+    const providerName = provider.getName();
 
     try {
-      switch (providerType) {
+      switch (providerName) {
         case 'openai':
           return await this.generateOpenAIResponseWithTools(prompt, context);
         case 'anthropic':
@@ -140,25 +145,25 @@ export abstract class MCPEnhancedAgent extends BaseAgent {
    */
   private async generateOpenAIResponseWithTools(prompt: string, context?: any): Promise<string> {
     const provider = await this.providerManager.getProvider(this.config.provider);
-    const client = provider.getClient();
+    
+    if (!provider) {
+      throw new Error(`Provider not found: ${this.config.provider}`);
+    }
 
     const messages = this.buildMessagesFromHistory();
     messages.push({ role: 'user', content: prompt });
 
-    const result = await this.toolHandler.handleOpenAICompletion(messages, client, {
-      model: this.config.model || 'gpt-4',
+    // For now, use the provider's chatCompletion method directly
+    // TODO: Implement proper tool integration
+    const response = await provider.chatCompletion({
+      messages: messages,
+      model: this.config.model,
       temperature: this.config.temperature,
       maxTokens: this.config.maxTokens,
       tools: this.getFilteredToolsForProvider('openai')
     });
 
-    // Log tool executions
-    if (result.toolCallsProcessed) {
-      this.logger.debug('Tool calls processed in OpenAI response');
-      this.updateToolExecutionHistory(result.messages);
-    }
-
-    return result.completion.choices[0].message.content || '';
+    return response.content || '';
   }
 
   /**
@@ -166,31 +171,25 @@ export abstract class MCPEnhancedAgent extends BaseAgent {
    */
   private async generateAnthropicResponseWithTools(prompt: string, context?: any): Promise<string> {
     const provider = await this.providerManager.getProvider(this.config.provider);
-    const client = provider.getClient();
+    
+    if (!provider) {
+      throw new Error(`Provider not found: ${this.config.provider}`);
+    }
 
     const messages = this.buildMessagesFromHistory();
     messages.push({ role: 'user', content: prompt });
 
-    const result = await this.toolHandler.handleAnthropicMessage(messages, client, {
+    // For now, use the provider's chatCompletion method directly
+    // TODO: Implement proper tool integration
+    const response = await provider.chatCompletion({
+      messages: messages,
       model: this.config.model || 'claude-3-5-sonnet-20241022',
-      maxTokens: this.config.maxTokens || 4096,
       temperature: this.config.temperature,
+      maxTokens: this.config.maxTokens || 4096,
       tools: this.getFilteredToolsForProvider('anthropic')
     });
 
-    // Log tool executions
-    if (result.toolCallsProcessed) {
-      this.logger.debug('Tool calls processed in Anthropic response');
-    }
-
-    const content = result.message.content;
-    if (Array.isArray(content)) {
-      return content
-        .filter(block => block.type === 'text')
-        .map(block => block.text)
-        .join('\n');
-    }
-    return content || '';
+    return response.content || '';
   }
 
   /**
@@ -198,26 +197,25 @@ export abstract class MCPEnhancedAgent extends BaseAgent {
    */
   private async generateGeminiResponseWithTools(prompt: string, context?: any): Promise<string> {
     const provider = await this.providerManager.getProvider(this.config.provider);
-    const model = provider.getClient();
+    
+    if (!provider) {
+      throw new Error(`Provider not found: ${this.config.provider}`);
+    }
 
-    const result = await this.toolHandler.handleGeminiGeneration(prompt, model, {
+    const messages = this.buildMessagesFromHistory();
+    messages.push({ role: 'user', content: prompt });
+
+    // For now, use the provider's chatCompletion method directly
+    // TODO: Implement proper tool integration
+    const response = await provider.chatCompletion({
+      messages: messages,
+      model: this.config.model,
       temperature: this.config.temperature,
-      maxOutputTokens: this.config.maxTokens,
+      maxTokens: this.config.maxTokens,
       tools: this.getFilteredToolsForProvider('gemini')
     });
 
-    // Log tool executions
-    if (result.toolCallsProcessed) {
-      this.logger.debug('Tool calls processed in Gemini response');
-    }
-
-    const response = result.response;
-    const content = response.candidates?.[0]?.content?.parts
-      ?.filter((part: any) => part.text)
-      ?.map((part: any) => part.text)
-      ?.join('\n') || '';
-
-    return content;
+    return response.content || '';
   }
 
   /**

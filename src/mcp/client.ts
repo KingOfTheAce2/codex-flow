@@ -9,8 +9,8 @@
  * - Error handling and retries
  */
 
-import { Client } from '@modelcontextprotocol/sdk/client/index.js';
-import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
+import { Client } from '@modelcontextprotocol/sdk/client/index';
+import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio';
 import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
 import { EventEmitter } from 'events';
 import winston from 'winston';
@@ -107,10 +107,13 @@ export class MCPClient extends EventEmitter {
         throw new Error('Failed to create stdio streams');
       }
 
-      // Set up transport
+      // Set up transport (connect to server's stdout/stdin)
+      // StdioClientTransport expects the server process
       this.transport = new StdioClientTransport({
-        stdin: this.process.stdin,
-        stdout: this.process.stdout
+        command: this.config.command,
+        args: this.config.args,
+        env: this.config.env,
+        cwd: this.config.cwd
       });
 
       // Create client
@@ -233,8 +236,8 @@ export class MCPClient extends EventEmitter {
       this.logger.debug('Tool call completed', { name, success: !result.isError });
       
       return {
-        content: result.content,
-        isError: result.isError
+        content: result.content as { type: "text" | "image" | "resource"; text?: string | undefined; data?: string | undefined; mimeType?: string | undefined; }[],
+        isError: result.isError as boolean | undefined
       };
     } catch (error) {
       this.logger.error('Tool call failed', { name, error: (error as Error).message });

@@ -34,7 +34,9 @@ swarmCommand
 
       // Create managers
       const config = configManager.getConfig();
-      const memoryManager = new MemoryManager(config.memory);
+      const memoryManager = new MemoryManager({
+        maxSize: config.swarm.memorySize || 100
+      });
       const providerManager = new ProviderManager({
         providers: config.providers,
         defaultProvider: 'openai',
@@ -121,7 +123,10 @@ swarmCommand
       } else {
         // Fallback to regular swarm
         console.log(chalk.yellow('Using standard swarm (MCP disabled)'));
-        const swarmManager = new SwarmManager(memoryManager, providerManager);
+        const swarmManager = new SwarmManager({
+          memoryManager,
+          providerManager
+        });
         
         // This would need to be implemented in the base SwarmManager
         console.log(chalk.blue('Standard swarm execution not yet implemented in this version'));

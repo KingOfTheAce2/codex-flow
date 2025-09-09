@@ -9,11 +9,11 @@ import { Command } from 'commander';
 import chalk from 'chalk';
 import ora from 'ora';
 import inquirer from 'inquirer';
-import { TaskAnalyzer } from '../../orchestrator/task-analyzer.js';
-import { AdapterRegistry } from '../../adapters/universal/base-adapter.js';
-import { ClaudeMCPFactory } from '../../adapters/claude/mcp-bridge.js';
-import { GeminiA2AFactory } from '../../adapters/gemini/a2a-bridge.js';
-import { TaskRequest, TaskResponse } from '../../adapters/universal/base-adapter.js';
+import { TaskAnalyzer } from '../../orchestrator/task-analyzer';
+import { AdapterRegistry, BaseAdapter } from '../../adapters/universal/base-adapter';
+import { ClaudeMCPFactory } from '../../adapters/claude/mcp-bridge';
+import { GeminiA2AFactory } from '../../adapters/gemini/a2a-bridge';
+import { TaskRequest, TaskResponse } from '../../adapters/universal/base-adapter';
 import { promises as fs } from 'fs';
 import path from 'path';
 
@@ -340,7 +340,7 @@ export class OrchestrateCommand {
     this.adapterRegistry.registerFactory('gemini', new GeminiA2AFactory());
     
     // Initialize enabled adapters
-    const promises = [];
+    const promises: Promise<BaseAdapter>[] = [];
     
     if (enabledProviders.includes('claude')) {
       promises.push(
@@ -410,7 +410,7 @@ export class OrchestrateCommand {
     options: OrchestrationOptions
   ): Promise<TaskResponse[]> {
     const providers = assessment.recommendations.slice(0, 2).map((r: any) => r.provider);
-    const promises = [];
+    const promises: Promise<TaskResponse>[] = [];
 
     for (const providerName of providers) {
       const adapter = this.adapterRegistry.getAdapter(providerName);
@@ -533,7 +533,7 @@ ${options.includeSynthesis ? 'Include synthesis and actionable recommendations' 
   }
 
   private async executeHybridOrchestration(description: string, options: any): Promise<void> {
-    const phases = [];
+    const phases: string[] = [];
     if (options.researchPhase !== false) phases.push('research');
     if (options.designPhase !== false) phases.push('design'); 
     if (options.implementationPhase !== false) phases.push('implementation');

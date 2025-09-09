@@ -1,13 +1,22 @@
 {
   "mcpServers": {
-    "ruv-swarm": {
-      "command": "ruv-swarm-mcp",
-      "args": [
-        "--stdio"
+    "invalid-server": {
+      "id": "invalid-server",
+      "command": "nonexistent-command",
+      "args": [],
+      "timeout": 5000,
+      "maxRetries": 1,
+      "tags": [
+        "test"
       ],
-      "env": {
-        "RUST_LOG": "info"
-      }
+      "autoStart": false,
+      "enabled": true
     }
+  },
+  "globalSettings": {
+    "autoConnectOnStart": true,
+    "healthCheckInterval": 30000,
+    "maxConcurrentConnections": 10,
+    "retryBackoffMs": 1000
   }
 }

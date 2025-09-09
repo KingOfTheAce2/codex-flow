@@ -89,7 +89,7 @@ export class WebSearchTool extends BaseTool {
       });
 
       const data = response.data;
-      const results = [];
+      const results: Array<{title: any, snippet: any, url: any, type: string}> = [];
 
       // Add instant answer if available
       if (data.Answer || data.AbstractText) {
@@ -171,7 +171,7 @@ export class WebSearchTool extends BaseTool {
           });
 
           const data = response.data;
-          const results = [];
+          const results: Array<{title: any, snippet: any, url: any, engine?: any, category?: any, type: string}> = [];
 
           if (data.results && Array.isArray(data.results)) {
             for (const result of data.results.slice(0, count)) {

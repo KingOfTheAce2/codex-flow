@@ -6,7 +6,7 @@
  */
 
 import OpenAI from 'openai';
-import { TaskRequest } from '../adapters/universal/base-adapter.js';
+import { TaskRequest } from '../adapters/universal/base-adapter';
 
 export interface TaskAnalysis {
   complexity: 'simple' | 'medium' | 'complex' | 'enterprise';

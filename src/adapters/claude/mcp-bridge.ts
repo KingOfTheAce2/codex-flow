@@ -5,7 +5,7 @@
  * preserving all existing functionality while enabling multi-AI orchestration.
  */
 
-import { BaseAdapter, TaskRequest, TaskResponse, AgentCapability, ProviderHealth, MemoryContext, AdapterFactory } from '../universal/base-adapter.js';
+import { BaseAdapter, TaskRequest, TaskResponse, AgentCapability, ProviderHealth, MemoryContext, AdapterFactory } from '../universal/base-adapter';
 import { spawn, ChildProcess } from 'child_process';
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -88,7 +88,7 @@ export class ClaudeMCPBridge extends BaseAdapter {
     } catch (error) {
       this.updateHealth({
         status: 'unavailable',
-        issues: [`Initialization failed: ${error.message}`]
+        issues: [`Initialization failed: ${(error as Error).message}`]
       });
       return false;
     }
@@ -306,7 +306,7 @@ export class ClaudeMCPBridge extends BaseAdapter {
         successRate: 0,
         errorRate: 100,
         lastCheck: new Date(),
-        issues: [`Health check error: ${error.message}`]
+        issues: [`Health check error: ${(error as Error).message}`]
       };
 
       this.updateHealth(health);

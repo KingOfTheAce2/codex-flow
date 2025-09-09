@@ -4,12 +4,12 @@
  * Simple MCP server implementation for testing the integration
  */
 
-import { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { Server } from '@modelcontextprotocol/sdk/server/index';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
-} from '@modelcontextprotocol/sdk/types.js';
+} from '@modelcontextprotocol/sdk/types';
 
 /**
  * Simple calculator MCP server for testing
@@ -83,6 +83,9 @@ export class TestMCPServer {
 
       switch (name) {
         case 'add':
+          if (!args || typeof args.a !== 'number' || typeof args.b !== 'number') {
+            throw new Error('Invalid arguments for add tool');
+          }
           const sum = args.a + args.b;
           return {
             content: [
@@ -94,6 +97,9 @@ export class TestMCPServer {
           };
 
         case 'multiply':
+          if (!args || typeof args.a !== 'number' || typeof args.b !== 'number') {
+            throw new Error('Invalid arguments for multiply tool');
+          }
           const product = args.a * args.b;
           return {
             content: [
@@ -105,6 +111,9 @@ export class TestMCPServer {
           };
 
         case 'echo':
+          if (!args || typeof args.message !== 'string') {
+            throw new Error('Invalid arguments for echo tool');
+          }
           return {
             content: [
               {

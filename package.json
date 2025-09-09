@@ -1,6 +1,6 @@
 {
   "name": "@bear_ai/codex-flow",
-  "version": "0.3.1-alpha",
+  "version": "1.0.0-alpha",
   "description": "Revolutionary AI orchestration system that unifies Claude, Gemini, and OpenAI under intelligent coordination for unprecedented performance",
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -41,7 +41,12 @@
     "postinstall": "npm run setup:mcp || true && npm run setup:mcp && npm run setup:mcp",
     "codex:bootstrap": "powershell -ExecutionPolicy Bypass -File scripts/codex/bootstrap.ps1",
     "codex:verify": "codex-flow config verify && echo \"Configuration: OK\"",
-    "codex:swarm": "codex-flow swarm spawn \"Build a simple hello world application\" --providers auto --verbose"
+    "codex:swarm": "codex-flow swarm spawn \"Build a simple hello world application\" --providers auto --verbose",
+    "meter:usage": "node scripts/usage-meter.js",
+    "meter:check": "node scripts/usage-meter.js check",
+    "meter:reset": "node scripts/usage-meter.js reset",
+    "meter:limits": "node scripts/usage-meter.js limits",
+    "example:metered": "node examples/metered-usage-example.js"
   },
   "keywords": [
     "openai",

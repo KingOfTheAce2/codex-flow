@@ -7,7 +7,7 @@
 import { Command } from 'commander';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
-import { initializeMCP } from '../../mcp/index.js';
+import { initializeMCP } from '../../mcp/index';
 
 export const mcpCommand = new Command('mcp')
   .description('Manage MCP servers and tools');
@@ -145,6 +145,8 @@ mcpCommand
         env: Object.keys(env).length > 0 ? env : undefined,
         cwd: options.cwd,
         timeout: parseInt(options.timeout),
+        maxRetries: 3,
+        tags: [],
         autoStart: !options.noAutoStart,
         enabled: !options.noEnable
       });

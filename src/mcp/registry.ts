@@ -7,7 +7,7 @@
 import { z } from 'zod';
 import fs from 'fs/promises';
 import path from 'path';
-import { MCPClientManager, MCPServerConfig } from './client.js';
+import { MCPClientManager, MCPServerConfig } from './client';
 import winston from 'winston';
 
 export const MCPServerConfigSchema = z.object({
@@ -58,7 +58,15 @@ export class MCPRegistry {
   constructor(configPath: string = '.mcp.json') {
     this.configPath = configPath;
     this.clientManager = new MCPClientManager();
-    this.config = { mcpServers: {}, globalSettings: {} };
+    this.config = { 
+      mcpServers: {}, 
+      globalSettings: {
+        autoConnectOnStart: true,
+        healthCheckInterval: 30000,
+        maxConcurrentConnections: 10,
+        retryBackoffMs: 1000
+      } 
+    };
     
     this.logger = winston.createLogger({
       level: 'info',

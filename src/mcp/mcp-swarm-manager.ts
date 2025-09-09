@@ -4,13 +4,13 @@
  * Extends SwarmManager with MCP tool capabilities for all agents
  */
 
-import { SwarmManager, SwarmConfig } from '../core/swarm/SwarmManager.js';
-import { MemoryManager } from '../core/memory/MemoryManager.js';
-import { ProviderManager } from '../core/providers/ProviderManager.js';
-import { MCPRegistry } from './registry.js';
-import { MCPToolRegistry } from './tool-adapter.js';
-import { MCPEnhancedAgent, MCPAgentConfig } from './mcp-enhanced-agent.js';
-import { BaseAgent, Task, AgentConfig } from '../core/agents/BaseAgent.js';
+import { SwarmManager, SwarmConfig } from '../core/swarm/SwarmManager';
+import { MemoryManager } from '../core/memory/MemoryManager';
+import { ProviderManager } from '../core/providers/ProviderManager';
+import { MCPRegistry } from './registry';
+import { MCPToolRegistry } from './tool-adapter';
+import { MCPEnhancedAgent, MCPAgentConfig } from './mcp-enhanced-agent';
+import { BaseAgent, Task, AgentConfig } from '../core/agents/BaseAgent';
 import winston from 'winston';
 
 export interface MCPSwarmConfig extends SwarmConfig {
@@ -40,7 +40,10 @@ export class MCPSwarmManager extends SwarmManager {
     mcpRegistry: MCPRegistry,
     mcpToolRegistry: MCPToolRegistry
   ) {
-    super(memoryManager, providerManager);
+    super({
+      memoryManager,
+      providerManager
+    });
     
     this.mcpRegistry = mcpRegistry;
     this.mcpToolRegistry = mcpToolRegistry;
@@ -74,14 +77,18 @@ export class MCPSwarmManager extends SwarmManager {
         await this.ensureMCPConnections(config);
       }
 
-      // Create regular swarm first
-      const swarmId = await this.createSwarm(config);
+      // Create regular swarm first using parent spawn method
+      const swarm = await super.spawn({
+        objective: config.objective,
+        maxAgents: config.maxAgents || 5,
+        topology: config.topology || 'hierarchical'
+      });
 
       // Enhance agents with MCP capabilities
-      await this.enhanceSwarmWithMCP(swarmId, config);
+      await this.enhanceSwarmWithMCP(swarm.getId(), config);
 
-      this.logger.info('MCP-enhanced swarm created successfully', { swarmId });
-      return swarmId;
+      this.logger.info('MCP-enhanced swarm created successfully', { swarmId: swarm.getId() });
+      return swarm.getId();
 
     } catch (error) {
       this.logger.error('Failed to create MCP-enhanced swarm', { 
@@ -210,7 +217,7 @@ export class MCPSwarmManager extends SwarmManager {
    * Enhance swarm agents with MCP capabilities
    */
   private async enhanceSwarmWithMCP(swarmId: string, config: MCPSwarmConfig): Promise<void> {
-    const swarm = this.getSwarm(swarmId);
+    const swarm = await this.getSwarm(swarmId);
     if (!swarm) {
       throw new Error(`Swarm not found: ${swarmId}`);
     }
@@ -224,17 +231,73 @@ export class MCPSwarmManager extends SwarmManager {
   }
 
   /**
+   * Execute a task using the specified swarm
+   */
+  async executeTask(swarmId: string, task: Task): Promise<string> {
+    try {
+      const swarm = await this.getSwarm(swarmId);
+      if (!swarm) {
+        throw new Error(`Swarm not found: ${swarmId}`);
+      }
+
+      this.logger.info('Executing task with MCP-enhanced swarm', { 
+        swarmId, 
+        taskId: task.id,
+        description: task.description.substring(0, 100)
+      });
+
+      // Execute the task directly with the swarm
+      const result = await swarm.execute();
+      
+      this.logger.info('Task execution completed', { 
+        swarmId, 
+        taskId: task.id 
+      });
+
+      return result;
+
+    } catch (error) {
+      this.logger.error('Task execution failed', { 
+        swarmId,
+        taskId: task.id,
+        error: (error as Error).message 
+      });
+      throw error;
+    }
+  }
+
+  /**
+   * List all swarms
+   */
+  async listSwarms(): Promise<Array<{ id: string; name: string; status: string; agentCount: number }>> {
+    try {
+      // Get all swarm statuses from parent class
+      const swarmStatuses = await super.list();
+      
+      return swarmStatuses.map(status => ({
+        id: status.id,
+        name: status.name,
+        status: status.status,
+        agentCount: status.metrics.totalAgents
+      }));
+    } catch (error) {
+      this.logger.error('Failed to list swarms', { error: (error as Error).message });
+      return [];
+    }
+  }
+
+  /**
    * Get MCP tool statistics for all swarms
    */
-  getMCPStats(): {
+  async getMCPStats(): Promise<{
     connectedServers: number;
     totalTools: number;
     toolsByServer: Record<string, number>;
     activeSwarms: number;
     mcpEnabledSwarms: number;
-  } {
+  }> {
     const toolStats = this.mcpToolRegistry.getStats();
-    const swarms = this.listSwarms();
+    const swarms = await this.listSwarms();
     
     return {
       connectedServers: toolStats.connectedServers.length,

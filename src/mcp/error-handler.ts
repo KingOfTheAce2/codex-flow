@@ -29,15 +29,25 @@ export interface CircuitBreakerConfig {
 }
 
 export class MCPError extends Error {
+  public code: string;
+  public serverId?: string;
+  public retryable: boolean;
+  public override cause?: Error;
+  public override name: string;
+  
   constructor(
     message: string,
-    public code: string,
-    public serverId?: string,
-    public retryable: boolean = false,
-    public cause?: Error
+    code: string,
+    serverId?: string,
+    retryable: boolean = false,
+    cause?: Error
   ) {
     super(message);
     this.name = 'MCPError';
+    this.code = code;
+    this.serverId = serverId;
+    this.retryable = retryable;
+    this.cause = cause;
   }
 }
 
@@ -198,7 +208,7 @@ export class MCPRetryHandler {
           this.logger.debug('Non-retryable error, stopping retries', {
             operationName,
             serverId,
-            error: error.message
+            error: (error as Error).message
           });
           throw error;
         }
@@ -207,7 +217,7 @@ export class MCPRetryHandler {
           operationName,
           serverId,
           attempt,
-          error: error.message,
+          error: (error as Error).message,
           nextDelayMs: Math.min(delay * this.config.backoffFactor, this.config.maxDelayMs)
         });
 

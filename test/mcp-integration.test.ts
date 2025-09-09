@@ -5,12 +5,12 @@
  */
 
 import { describe, test, expect, beforeAll, afterAll } from '@jest/globals';
-import { MCPRegistry } from '../src/mcp/registry.js';
-import { MCPToolRegistry } from '../src/mcp/tool-adapter.js';
-import { LLMToolBridge } from '../src/mcp/llm-bridge.js';
-import { MCPSwarmManager } from '../src/mcp/mcp-swarm-manager.js';
-import { MemoryManager } from '../src/core/memory/MemoryManager.js';
-import { ProviderManager } from '../src/core/providers/ProviderManager.js';
+import { MCPRegistry } from '../src/mcp/registry';
+import { MCPToolRegistry } from '../src/mcp/tool-adapter';
+import { LLMToolBridge } from '../src/mcp/llm-bridge';
+import { MCPSwarmManager } from '../src/mcp/mcp-swarm-manager';
+import { MemoryManager } from '../src/core/memory/MemoryManager';
+import { ProviderManager } from '../src/core/providers/ProviderManager';
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -80,7 +80,8 @@ describe('MCP Integration', () => {
       enabled: false,
       autoStart: false,
       timeout: 5000,
-      maxRetries: 1
+      maxRetries: 1,
+      tags: ['test']
     });
 
     const config = mcpRegistry.getConfig();
@@ -210,20 +211,16 @@ describe('MCP Integration', () => {
 
     beforeAll(async () => {
       memoryManager = new MemoryManager({
-        enabled: true,
-        path: ':memory:', // Use in-memory SQLite for tests
-        maxEntries: 1000,
-        retentionDays: 7
+        dbPath: ':memory:', // Use in-memory SQLite for tests
+        maxSize: 100
       });
 
       providerManager = new ProviderManager({
         providers: {
           local: {
             enabled: true,
-            provider: 'local',
-            apiFormat: 'openai',
-            baseUrl: 'http://localhost:11434/v1',
-            model: 'llama2',
+            url: 'http://localhost:11434/v1',
+            defaultModel: 'llama2',
             apiKey: 'test-key'
           }
         },
@@ -242,7 +239,7 @@ describe('MCP Integration', () => {
       await mcpRegistry.connectServer('test-calculator');
       toolRegistry.refreshTools();
 
-      const stats = mcpSwarmManager.getMCPStats();
+      const stats = await mcpSwarmManager.getMCPStats();
       expect(stats.totalTools).toBeGreaterThan(0);
       expect(stats.connectedServers).toBeGreaterThan(0);
       expect(stats.toolsByServer).toHaveProperty('test-calculator');
@@ -270,6 +267,8 @@ describe('MCP Error Handling', () => {
       command: 'sleep',
       args: ['10'],
       timeout: 1000, // 1 second timeout
+      maxRetries: 1,
+      tags: ['test'],
       enabled: true,
       autoStart: false
     });
@@ -285,6 +284,9 @@ describe('MCP Error Handling', () => {
       id: 'invalid-server',
       command: 'nonexistent-command',
       args: [],
+      timeout: 5000,
+      maxRetries: 1,
+      tags: ['test'],
       enabled: true,
       autoStart: false
     });

@@ -115,7 +115,7 @@ Respond with a JSON object containing your analysis.`;
     const complexity = text.toLowerCase().includes('high') ? 'high' : 
                       text.toLowerCase().includes('low') ? 'low' : 'medium';
     
-    const skills = [];
+    const skills: string[] = [];
     if (text.toLowerCase().includes('cod')) skills.push('coder');
     if (text.toLowerCase().includes('test')) skills.push('tester');
     if (text.toLowerCase().includes('research')) skills.push('researcher');
