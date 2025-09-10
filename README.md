@@ -1,5 +1,3 @@
->_ You are using OpenAI Codex in D:\GitHub\Codex-flow-test
-
 ## 🔑 Authentication Requirements
 
 ### 🚨 OpenAI API Key - HARD REQUIREMENT
