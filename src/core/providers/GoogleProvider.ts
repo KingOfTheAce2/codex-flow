@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI, GenerativeModel } from '@google/generative-ai';
-import { BaseProvider, ProviderResponse, ChatCompletionRequest, ProviderConfig, ProviderMessage } from './BaseProvider';
+import { BaseProvider, ProviderResponse, ChatCompletionRequest, ProviderConfig, ProviderMessage } from './BaseProvider.js';
 
 export class GoogleProvider extends BaseProvider {
   private client: GoogleGenerativeAI;

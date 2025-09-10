@@ -1,8 +1,8 @@
 import { Command } from 'commander';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
-import { TaskManager } from '../../core/tasks/TaskManager';
-import { ConfigManager } from '../../core/config';
+import { TaskManager } from '../../core/tasks/TaskManager.js';
+import { ConfigManager } from '../../core/config/index.js';
 
 export const taskCommand = new Command('task')
   .description('Manage individual tasks');

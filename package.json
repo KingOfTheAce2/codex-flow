@@ -1,7 +1,8 @@
 {
   "name": "@bear_ai/codex-flow",
-  "version": "1.0.0-alpha",
+  "version": "1.0.1-alpha",
   "description": "Revolutionary AI orchestration system that unifies Claude, Gemini, and OpenAI under intelligent coordination for unprecedented performance",
+  "type": "module",
   "main": "src/index.ts",
   "types": "src/index.ts",
   "bin": {

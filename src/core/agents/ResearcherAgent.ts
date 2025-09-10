@@ -1,5 +1,5 @@
-import { BaseAgent, Task, AgentConfig } from './BaseAgent';
-import { ProviderManager } from '../providers/ProviderManager';
+import { BaseAgent, Task, AgentConfig } from './BaseAgent.js';
+import { ProviderManager } from '../providers/ProviderManager.js';
 
 export class ResearcherAgent extends BaseAgent {
   private researchHistory: Array<{

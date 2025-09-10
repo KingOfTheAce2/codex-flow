@@ -1,1 +1,1 @@
-export { PluginSystem, PluginManifest, Plugin, PluginConfig } from './PluginSystem';
+export { PluginSystem, PluginManifest, Plugin, PluginConfig } from './PluginSystem.js';

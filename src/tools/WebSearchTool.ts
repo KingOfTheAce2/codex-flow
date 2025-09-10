@@ -1,4 +1,4 @@
-import { BaseTool, ToolResult } from './BaseTool';
+import { BaseTool, ToolResult } from './BaseTool.js';
 import axios from 'axios';
 
 export class WebSearchTool extends BaseTool {

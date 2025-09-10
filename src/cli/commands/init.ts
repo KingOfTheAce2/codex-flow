@@ -4,7 +4,7 @@ import inquirer from 'inquirer';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { spawn } from 'child_process';
-import { ConfigManager } from '../../core/config';
+import { ConfigManager } from '../../core/config/index.js';
 
 export const initCommand = new Command('init')
   .description('Initialize a new codex-flow project')

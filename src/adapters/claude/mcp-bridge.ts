@@ -5,7 +5,7 @@
  * preserving all existing functionality while enabling multi-AI orchestration.
  */
 
-import { BaseAdapter, TaskRequest, TaskResponse, AgentCapability, ProviderHealth, MemoryContext, AdapterFactory } from '../universal/base-adapter';
+import { BaseAdapter, TaskRequest, TaskResponse, AgentCapability, ProviderHealth, MemoryContext, AdapterFactory } from '../universal/base-adapter.js';
 import { spawn, ChildProcess } from 'child_process';
 import { promises as fs } from 'fs';
 import path from 'path';

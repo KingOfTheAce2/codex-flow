@@ -1,8 +1,8 @@
 import { EventEmitter } from 'events';
-import { BaseAgent, Task } from '../agents/BaseAgent';
-import { AgentFactory } from '../agents/AgentFactory';
-import { MemoryManager } from '../memory/MemoryManager';
-import { ProviderManager } from '../providers/ProviderManager';
+import { BaseAgent, Task } from '../agents/BaseAgent.js';
+import { AgentFactory } from '../agents/AgentFactory.js';
+import { MemoryManager } from '../memory/MemoryManager.js';
+import { ProviderManager } from '../providers/ProviderManager.js';
 
 export interface SwarmConfig {
   id: string;

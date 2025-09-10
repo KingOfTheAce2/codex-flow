@@ -2,7 +2,7 @@ import { Command } from 'commander';
 import chalk from 'chalk';
 import path from 'path';
 import { promises as fs } from 'fs';
-import { HiveLoopRunner, HiveLoopConfig } from '../../core/hive-loop/HiveLoopRunner';
+import { HiveLoopRunner, HiveLoopConfig } from '../../core/hive-loop/HiveLoopRunner.js';
 
 export const hiveLoopCommand = new Command('hive-loop')
   .description('Automated hive-mind spawning with loop control');

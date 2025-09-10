@@ -1,9 +1,9 @@
 import { EventEmitter } from 'events';
-import { BaseProvider, ProviderResponse, ChatCompletionRequest, ProviderConfig } from './BaseProvider';
-import { OpenAIProvider } from './OpenAIProvider';
-import { AnthropicProvider } from './AnthropicProvider';
-import { GoogleProvider } from './GoogleProvider';
-import { LocalProvider } from './LocalProvider';
+import { BaseProvider, ProviderResponse, ChatCompletionRequest, ProviderConfig } from './BaseProvider.js';
+import { OpenAIProvider } from './OpenAIProvider.js';
+import { AnthropicProvider } from './AnthropicProvider.js';
+import { GoogleProvider } from './GoogleProvider.js';
+import { LocalProvider } from './LocalProvider.js';
 
 export interface ProviderManagerConfig {
   providers: Record<string, ProviderConfig & { enabled: boolean }>;

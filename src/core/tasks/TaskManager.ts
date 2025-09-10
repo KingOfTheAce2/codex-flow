@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import { Task } from '../agents/BaseAgent';
+import { Task } from '../agents/BaseAgent.js';
 
 export interface TaskFilter {
   swarmId?: string;

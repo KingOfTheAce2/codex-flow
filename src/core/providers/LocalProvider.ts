@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { BaseProvider, ProviderResponse, ChatCompletionRequest, ProviderConfig } from './BaseProvider';
+import { BaseProvider, ProviderResponse, ChatCompletionRequest, ProviderConfig } from './BaseProvider.js';
 
 export class LocalProvider extends BaseProvider {
   private client: AxiosInstance;

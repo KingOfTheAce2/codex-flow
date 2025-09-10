@@ -1,6 +1,6 @@
 import OpenAI from 'openai';
-import { BaseProvider, ProviderResponse, ChatCompletionRequest, ProviderConfig } from './BaseProvider';
-import { AuthManager } from '../auth/AuthManager';
+import { BaseProvider, ProviderResponse, ChatCompletionRequest, ProviderConfig } from './BaseProvider.js';
+import { AuthManager } from '../auth/AuthManager.js';
 
 export class OpenAIProvider extends BaseProvider {
   private client!: OpenAI;

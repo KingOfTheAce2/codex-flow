@@ -7,7 +7,7 @@
 import { z } from 'zod';
 import fs from 'fs/promises';
 import path from 'path';
-import { MCPClientManager, MCPServerConfig } from './client';
+import { MCPClientManager, MCPServerConfig } from './client.js';
 import winston from 'winston';
 
 export const MCPServerConfigSchema = z.object({

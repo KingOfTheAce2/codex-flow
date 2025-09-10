@@ -4,11 +4,11 @@
  * Extends BaseAgent with MCP tool integration capabilities
  */
 
-import { BaseAgent, AgentConfig, Task, AgentContext } from '../core/agents/BaseAgent';
-import { ProviderManager } from '../core/providers/ProviderManager';
-import { LLMToolBridge, ProviderToolHandler } from './llm-bridge';
-import { MCPToolRegistry } from './tool-adapter';
-import { MCPRegistry } from './registry';
+import { BaseAgent, AgentConfig, Task, AgentContext } from '../core/agents/BaseAgent.js';
+import { ProviderManager } from '../core/providers/ProviderManager.js';
+import { LLMToolBridge, ProviderToolHandler } from './llm-bridge.js';
+import { MCPToolRegistry } from './tool-adapter.js';
+import { MCPRegistry } from './registry.js';
 import winston from 'winston';
 
 export interface MCPAgentConfig extends AgentConfig {

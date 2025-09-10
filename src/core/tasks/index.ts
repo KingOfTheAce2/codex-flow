@@ -1,1 +1,1 @@
-export { TaskManager, TaskFilter, CreateTaskRequest, UpdateTaskRequest } from './TaskManager';
+export { TaskManager, TaskFilter, CreateTaskRequest, UpdateTaskRequest } from './TaskManager.js';

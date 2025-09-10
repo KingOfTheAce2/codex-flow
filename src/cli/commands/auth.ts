@@ -4,8 +4,8 @@ import inquirer from 'inquirer';
 import open from 'open';
 import { createServer } from 'http';
 import { URL } from 'url';
-import { ConfigManager } from '../../core/config';
-import { AuthManager } from '../../core/auth/AuthManager';
+import { ConfigManager } from '../../core/config/index.js';
+import { AuthManager } from '../../core/auth/AuthManager.js';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 

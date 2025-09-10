@@ -5,7 +5,7 @@
  * and MCP tools, providing unified tool execution across all providers
  */
 
-import { MCPToolRegistry, ToolResult } from './tool-adapter';
+import { MCPToolRegistry, ToolResult } from './tool-adapter.js';
 import winston from 'winston';
 
 // OpenAI tool call interfaces

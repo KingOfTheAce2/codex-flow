@@ -1,7 +1,7 @@
 import { Command } from 'commander';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
-import { ConfigManager } from '../../core/config';
+import { ConfigManager } from '../../core/config/index.js';
 
 export const configCommand = new Command('config')
   .description('Manage configuration');

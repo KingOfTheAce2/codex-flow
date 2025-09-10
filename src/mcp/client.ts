@@ -9,8 +9,8 @@
  * - Error handling and retries
  */
 
-import { Client } from '@modelcontextprotocol/sdk/client/index';
-import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio';
+import { Client } from '@modelcontextprotocol/sdk/client/index.js';
+import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
 import { EventEmitter } from 'events';
 import winston from 'winston';

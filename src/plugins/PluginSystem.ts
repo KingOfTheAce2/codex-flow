@@ -1,8 +1,8 @@
 import { EventEmitter } from 'events';
 import { promises as fs } from 'fs';
 import path from 'path';
-import { BaseTool } from '../tools/BaseTool';
-import { BaseAgent } from '../core/agents/BaseAgent';
+import { BaseTool } from '../tools/BaseTool.js';
+import { BaseAgent } from '../core/agents/BaseAgent.js';
 
 export interface PluginManifest {
   name: string;
@@ -514,7 +514,7 @@ export class PluginSystem extends EventEmitter {
   private generateMainFileTemplate(type: PluginManifest['type'], typescript: boolean = false): string {
     const lang = typescript ? 'ts' : 'js';
     const imports = typescript 
-      ? `import { BaseTool, ToolResult } from '../tools/BaseTool';\nimport { BaseAgent } from '../core/agents/BaseAgent';`
+      ? `import { BaseTool, ToolResult } from '../tools/BaseTool.js';\nimport { BaseAgent } from '../core/agents/BaseAgent.js';`
       : `const { BaseTool } = require('../tools/BaseTool');\nconst { BaseAgent } = require('../core/agents/BaseAgent');`;
 
     switch (type) {

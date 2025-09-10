@@ -6,7 +6,7 @@
  */
 
 import { OpenAI } from 'openai';
-import { getUsageLimits, validateUsageLimits, UsageLimits } from '../config/usage-limits';
+import { getUsageLimits, validateUsageLimits, UsageLimits } from '../config/usage-limits.js';
 import fs from 'fs';
 import path from 'path';
 

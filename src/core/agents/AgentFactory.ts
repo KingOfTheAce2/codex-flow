@@ -1,9 +1,9 @@
-import { BaseAgent, AgentConfig } from './BaseAgent';
-import { CoordinatorAgent } from './CoordinatorAgent';
-import { CoderAgent } from './CoderAgent';
-import { TesterAgent } from './TesterAgent';
-import { ResearcherAgent } from './ResearcherAgent';
-import { ProviderManager } from '../providers/ProviderManager';
+import { BaseAgent, AgentConfig } from './BaseAgent.js';
+import { CoordinatorAgent } from './CoordinatorAgent.js';
+import { CoderAgent } from './CoderAgent.js';
+import { TesterAgent } from './TesterAgent.js';
+import { ResearcherAgent } from './ResearcherAgent.js';
+import { ProviderManager } from '../providers/ProviderManager.js';
 import { EventEmitter } from 'events';
 
 export interface AgentTemplate {

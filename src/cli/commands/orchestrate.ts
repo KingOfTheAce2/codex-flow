@@ -9,11 +9,11 @@ import { Command } from 'commander';
 import chalk from 'chalk';
 import ora from 'ora';
 import inquirer from 'inquirer';
-import { TaskAnalyzer } from '../../orchestrator/task-analyzer';
-import { AdapterRegistry, BaseAdapter } from '../../adapters/universal/base-adapter';
-import { ClaudeMCPFactory } from '../../adapters/claude/mcp-bridge';
-import { GeminiA2AFactory } from '../../adapters/gemini/a2a-bridge';
-import { TaskRequest, TaskResponse } from '../../adapters/universal/base-adapter';
+import { TaskAnalyzer } from '../../orchestrator/task-analyzer.js';
+import { AdapterRegistry, BaseAdapter } from '../../adapters/universal/base-adapter.js';
+import { ClaudeMCPFactory } from '../../adapters/claude/mcp-bridge.js';
+import { GeminiA2AFactory } from '../../adapters/gemini/a2a-bridge.js';
+import { TaskRequest, TaskResponse } from '../../adapters/universal/base-adapter.js';
 import { promises as fs } from 'fs';
 import path from 'path';
 

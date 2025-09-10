@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
-import { ProviderManager } from '../providers/ProviderManager';
-import { ChatCompletionRequest, ProviderResponse } from '../providers/BaseProvider';
+import { ProviderManager } from '../providers/ProviderManager.js';
+import { ChatCompletionRequest, ProviderResponse } from '../providers/BaseProvider.js';
 
 export interface AgentConfig {
   id: string;

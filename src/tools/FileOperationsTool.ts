@@ -1,4 +1,4 @@
-import { BaseTool, ToolResult } from './BaseTool';
+import { BaseTool, ToolResult } from './BaseTool.js';
 import { promises as fs } from 'fs';
 import path from 'path';
 

@@ -4,9 +4,9 @@
  * Bridges MCP tools with the unified Tool interface used by swarm agents
  */
 
-import { MCPClient, MCPTool, MCPToolResult } from './client';
-import { MCPRegistry } from './registry';
-import { BaseTool } from '../tools/BaseTool';
+import { MCPClient, MCPTool, MCPToolResult } from './client.js';
+import { MCPRegistry } from './registry.js';
+import { BaseTool } from '../tools/BaseTool.js';
 import winston from 'winston';
 
 export interface ToolCall {

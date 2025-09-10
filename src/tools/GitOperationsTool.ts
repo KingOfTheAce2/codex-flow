@@ -1,4 +1,4 @@
-import { BaseTool, ToolResult } from './BaseTool';
+import { BaseTool, ToolResult } from './BaseTool.js';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 

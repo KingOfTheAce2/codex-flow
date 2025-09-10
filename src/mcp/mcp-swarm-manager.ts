@@ -4,13 +4,13 @@
  * Extends SwarmManager with MCP tool capabilities for all agents
  */
 
-import { SwarmManager, SwarmConfig } from '../core/swarm/SwarmManager';
-import { MemoryManager } from '../core/memory/MemoryManager';
-import { ProviderManager } from '../core/providers/ProviderManager';
-import { MCPRegistry } from './registry';
-import { MCPToolRegistry } from './tool-adapter';
-import { MCPEnhancedAgent, MCPAgentConfig } from './mcp-enhanced-agent';
-import { BaseAgent, Task, AgentConfig } from '../core/agents/BaseAgent';
+import { SwarmManager, SwarmConfig } from '../core/swarm/SwarmManager.js';
+import { MemoryManager } from '../core/memory/MemoryManager.js';
+import { ProviderManager } from '../core/providers/ProviderManager.js';
+import { MCPRegistry } from './registry.js';
+import { MCPToolRegistry } from './tool-adapter.js';
+import { MCPEnhancedAgent, MCPAgentConfig } from './mcp-enhanced-agent.js';
+import { BaseAgent, Task, AgentConfig } from '../core/agents/BaseAgent.js';
 import winston from 'winston';
 
 export interface MCPSwarmConfig extends SwarmConfig {

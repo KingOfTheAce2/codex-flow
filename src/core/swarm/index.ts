@@ -1,1 +1,1 @@
-export { SwarmManager, SwarmConfig, SwarmStatus, Swarm } from './SwarmManager';
+export { SwarmManager, SwarmConfig, SwarmStatus, Swarm } from './SwarmManager.js';

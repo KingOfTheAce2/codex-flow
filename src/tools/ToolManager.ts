@@ -1,8 +1,8 @@
 import { EventEmitter } from 'events';
-import { BaseTool, ToolResult } from './BaseTool';
-import { FileOperationsTool } from './FileOperationsTool';
-import { GitOperationsTool } from './GitOperationsTool';
-import { WebSearchTool } from './WebSearchTool';
+import { BaseTool, ToolResult } from './BaseTool.js';
+import { FileOperationsTool } from './FileOperationsTool.js';
+import { GitOperationsTool } from './GitOperationsTool.js';
+import { WebSearchTool } from './WebSearchTool.js';
 
 export interface ToolRegistry {
   [name: string]: BaseTool;

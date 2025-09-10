@@ -6,7 +6,7 @@
  * while preserving Byzantine fault tolerance and real-time optimization.
  */
 
-import { BaseAdapter, TaskRequest, TaskResponse, AgentCapability, ProviderHealth, MemoryContext, AdapterFactory } from '../universal/base-adapter';
+import { BaseAdapter, TaskRequest, TaskResponse, AgentCapability, ProviderHealth, MemoryContext, AdapterFactory } from '../universal/base-adapter.js';
 import { EventEmitter } from 'events';
 
 export interface GeminiConfig {

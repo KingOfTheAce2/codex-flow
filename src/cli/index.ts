@@ -2,14 +2,20 @@
 
 import { Command } from 'commander';
 import chalk from 'chalk';
-import { initCommand } from './commands/init';
-import { swarmCommand } from './commands/swarm';
-import { taskCommand } from './commands/task';
-import { configCommand } from './commands/config';
-import { authCommand } from './commands/auth';
-import { hiveLoopCommand } from './commands/hive-loop';
-import { mcpCommand } from './commands/mcp';
-const packageJson = require('../../package.json');
+import { initCommand } from './commands/init.js';
+import { swarmCommand } from './commands/swarm.js';
+import { taskCommand } from './commands/task.js';
+import { configCommand } from './commands/config.js';
+import { authCommand } from './commands/auth.js';
+import { hiveLoopCommand } from './commands/hive-loop.js';
+import { mcpCommand } from './commands/mcp.js';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const packageJson = JSON.parse(readFileSync(path.join(__dirname, '../../package.json'), 'utf-8'));
 const version = packageJson.version;
 
 const program = new Command();

@@ -1,5 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
-import { BaseProvider, ProviderResponse, ChatCompletionRequest, ProviderConfig, ProviderMessage } from './BaseProvider';
+import { BaseProvider, ProviderResponse, ChatCompletionRequest, ProviderConfig, ProviderMessage } from './BaseProvider.js';
 
 export class AnthropicProvider extends BaseProvider {
   private client: Anthropic;

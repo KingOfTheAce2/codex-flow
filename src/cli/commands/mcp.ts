@@ -7,7 +7,7 @@
 import { Command } from 'commander';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
-import { initializeMCP } from '../../mcp/index';
+import { initializeMCP } from '../../mcp/index.js';
 
 export const mcpCommand = new Command('mcp')
   .description('Manage MCP servers and tools');
