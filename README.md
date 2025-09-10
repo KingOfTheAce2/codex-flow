@@ -562,4 +562,3 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 [Claude-Flow]: https://github.com/ruvnet/claude-flow
 [Gemini-Flow]: https://github.com/clduab11/gemini-flow
-[BEAR AI]: https://github.com/KingOfTheAce2/BEAR_AI
